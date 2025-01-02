@@ -26,8 +26,7 @@ Una vez instalado, puedes usar los componentes `Dropdown` y `DropdownItem` en tu
 
 ```svelte
 <script lang="ts">
-  import Dropdown from './lib/Dropdown.svelte';
-  import DropdownItem from './lib/DropdownItem.svelte';
+  import { Dropdown, DropdownItem } from '@flexiui/svelte-dropdown';
 
   let recalculateDropdownPosition = null;
 
