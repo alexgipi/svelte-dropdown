@@ -1,0 +1,35 @@
+{
+  "name": "@flexiui/svelte-dropdown",
+	"version": "0.0.1",
+	"description": "A lightweight and flexible Svelte dropdown component",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && svelte-package",
+    "preview": "vite preview"
+  },
+  "files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		}
+	},
+  "devDependencies": {
+    "@sveltejs/package": "^2.3.7",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "svelte": "^5.1.3",
+    "vite": "^5.4.10"
+  },
+  "author": "alexgipi <alexgp895@gmail.com>",
+  "license": "MIT"
+}
