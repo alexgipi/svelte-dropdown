@@ -19,6 +19,14 @@
 
     // Cuando el componente se monta
     onMount(() => {
+        initDropdown();
+    });
+
+    onDestroy(() => {
+        document.removeEventListener("click", closeDropdown);
+    });
+
+    export function initDropdown(){
         dropdownToggle = document.querySelectorAll(`[data-dropdown-toggle="${id}"]`);
         
         dropdownToggle.forEach((el: any) => {
@@ -30,11 +38,12 @@
         });
 
         document.addEventListener("click", closeDropdown);
-    });
+    }
 
-    onDestroy(() => {
-        document.removeEventListener("click", closeDropdown);
-    });
+    export async function refreshDropdown(){
+        await tick();
+        initDropdown();
+    }
 
     async function toggleDropdown(el, key) {
         if (openedKey === key) {

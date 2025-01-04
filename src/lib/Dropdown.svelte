@@ -26,26 +26,48 @@
         document.removeEventListener("click", closeDropdown);
     });
 
-    export function initDropdown(){
+    let dropdownListeners = new Map<Element, EventListener>();
+
+    export function initDropdown() {
+        // Limpia los listeners existentes
+        cleanupDropdownListeners();
+
         dropdownToggle = document.querySelectorAll(`[data-dropdown-toggle="${id}"]`);
-        
-        dropdownToggle.forEach((el: any) => {
-            el.addEventListener("click", (event) => {
+        dropdownToggle.forEach((el: Element) => {
+            // Define la función listener para el elemento
+            const listener = (event: Event) => {
                 event.stopPropagation();
-                const key = el.getAttribute('data-dropdown-key');
+                const key = el.getAttribute("data-dropdown-key");
                 toggleDropdown(el, key);
-            });
+            };
+
+            // Asocia el listener al elemento
+            el.addEventListener("click", listener);
+            dropdownListeners.set(el, listener);
         });
 
         document.addEventListener("click", closeDropdown);
     }
 
-    export async function refreshDropdown(){
+    // Limpia los listeners para evitar duplicados
+    function cleanupDropdownListeners() {
+        dropdownListeners.forEach((listener, el) => {
+            el.removeEventListener("click", listener);
+        });
+        dropdownListeners.clear();
+
+        // También elimina el listener global si es necesario
+        document.removeEventListener("click", closeDropdown);
+    }
+
+    export async function refreshDropdown() {
         await tick();
         initDropdown();
     }
 
     async function toggleDropdown(el, key) {
+        console.log("Toggle");
+        console.log({openedKey, key});
         if (openedKey === key) {
             opened = false;
             openedKey = null;
