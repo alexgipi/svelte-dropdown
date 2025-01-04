@@ -3,6 +3,7 @@
   import DropdownItem from './lib/DropdownItem.svelte';
 
   let recalculateDropdownPosition = null;
+  let refreshDropdown = null;
 
   function handleOpenDropdown(e) {
     console.log(e);
@@ -22,7 +23,7 @@
                         "left-top" | "left-center" | "left-bottom" | 
                         "right-top" | "right-center" | "right-bottom" = "bottom-right";
 
-  const positions = [
+  let positions = [
     ["top-left", "top-center", "top-right"], 
     ["bottom-left", "bottom-center", "bottom-right"], 
     ["left-top", "left-center", "left-bottom"], 
@@ -33,6 +34,11 @@
     activePosition = position;
   }
 
+  function addPosition() {
+    positions = [...positions, ["top-left"]];
+
+    refreshDropdown();
+  }
 </script>
 
 <main>
@@ -41,7 +47,8 @@
       <span class="flip-letter">F</span>L
     </span>
   </div>
-
+  <button on:click={refreshDropdown}>Refresh</button>
+  <button on:click={addPosition}>Add Position</button>
   <h1>@flexiui/svelte-tags-input</h1>
   <p>A lightweight and flexible tags input component for managing tags.</p>
 
@@ -65,6 +72,7 @@
     </div>
 
     <Dropdown 
+    bind:refreshDropdown={refreshDropdown}
     bind:calculatePosition={recalculateDropdownPosition} 
     position={activePosition}
     yOffset={0} 
