@@ -40,7 +40,8 @@
         document.addEventListener("click", closeDropdown);
     }
 
-    export function refreshDropdown(){
+    export async function refreshDropdown(){
+        await tick();
         initDropdown();
     }
 
