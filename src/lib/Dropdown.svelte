@@ -29,10 +29,9 @@
     let dropdownListeners = new Map<Element, EventListener>();
 
     export function initDropdown() {
-        // Limpia los listeners existentes
         cleanupDropdownListeners();
-
         dropdownToggle = document.querySelectorAll(`[data-dropdown-toggle="${id}"]`);
+
         dropdownToggle.forEach((el: Element) => {
             // Define la función listener para el elemento
             const listener = (event: Event) => {
@@ -41,7 +40,7 @@
                 toggleDropdown(el, key);
             };
 
-            // Asocia el listener al elemento
+ 
             el.addEventListener("click", listener);
             dropdownListeners.set(el, listener);
         });
@@ -81,15 +80,20 @@
         if (opened) calculatePosition(el);
     }
 
+
+    export function close(){
+        opened = false;
+        openedKey = null;
+        dispatch('close', { id, eventType: 'dropdown-close' });
+    }
+
     function closeDropdown(event) {
         if (
             dropdownPanelEl &&
             !dropdownPanelEl.contains(event.target) &&
             !dropdownToggle[0].contains(event.target)
         ) {
-            opened = false;
-            openedKey = null;
-            dispatch('close', { id, eventType: 'dropdown-close' });
+            close();
         }
     }
 
